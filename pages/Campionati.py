@@ -1,5 +1,7 @@
 import pandas as pd
 import streamlit as st
+import geopandas as gpd
+import matplotlib.pyplot as plt
 
 st.title("Campionati Regionali")
 
@@ -15,8 +17,28 @@ def classifica(df):
     cl=pd.concat([casa,tras],ignore_index=True).groupby('Squadra',as_index=False).agg({'Punti':'sum','W':'sum','D':'sum','L':'sum','GF':'sum','GS':'sum'}).sort_values(['Punti'],ascending=False)
     return cl
 
-sel_regione=st.selectbox('Scegli una regione',['Puglia','Toscana'])
-if sel_regione=='Puglia':
+def mappa(county,lista_com):
+    italy_shp_file = "https://raw.githubusercontent.com/tommyblasco/simulazioneComuni/main/ITA_adm3.shp"
+    italy_csv_file = "https://raw.githubusercontent.com/tommyblasco/simulazioneComuni/main/ITA_adm3.csv"
+    gdf_italy = gpd.read_file(italy_shp_file)
+    csv_ita = pd.read_csv(italy_csv_file, sep=',')
+    gdf_italy['Comune'] = csv_ita['NAME_3']
+    gdf_italy['Regione'] = csv_ita['NAME_1']
+    regione = gdf_italy[gdf_italy['Regione']==county]
+    fig, ax = plt.subplots()
+    regione.boundary.plot(ax=ax, color='black')
+    gruppo = gdf_italy[gdf_italy['Comune'].isin(lista_com)]
+    gruppo.plot(ax=ax, color='red', legend=False)
+    if county=='Apulia':
+        plt.xlim([14.5, 18.5])
+        plt.ylim([39.5, 42])
+    else:
+        plt.xlim([9.5, 13])
+        plt.ylim([42, 44.5])
+    #plt.show()
+
+sel_regione=st.selectbox('Scegli una regione',['Apulia','Toscana'])
+if sel_regione=='Apulia':
     db_prov=pd.read_csv("https://raw.githubusercontent.com/tommyblasco/simulazioneComuni/main/New%20Puglia.csv",
                            sep=";",decimal=",")
     db_ris=pd.read_csv("https://raw.githubusercontent.com/tommyblasco/simulazioneComuni/main/Risultati%20Puglia.csv",
@@ -29,9 +51,12 @@ else:
 lista_gironi=tuple(sorted(set(db_ris['Gruppo'])))
 sel_girone=st.selectbox('Scegli un girone',lista_gironi)
 
-tab1, tab2, tab3 = st.tabs(["Comuni Partecipanti","Risultati","Classifica"])
 db_prov_gir = db_prov[db_prov['Group']==sel_girone]
 db_ris_gir = db_ris[db_ris['Gruppo']==sel_girone]
+
+st.pyplot(mappa(county=sel_regione,lista_com=list(db_prov_gir['Nome'])))
+
+tab1, tab2, tab3 = st.tabs(["Comuni Partecipanti","Risultati","Classifica"])
 with tab1:
     st.write('Tutti i comuni del girone:')
     db_prov_gir['url_stemma']=['https://www.araldicacivica.it/wp-content/uploads/2016/04/'+str(x)+'.jpg' for x in db_prov_gir['Nome']]
