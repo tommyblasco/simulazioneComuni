@@ -4,6 +4,7 @@ import geopandas as gpd
 import matplotlib.pyplot as plt
 
 st.title("Campionati Regionali")
+st.set_option('deprecation.showPyplotGlobalUse', False)
 
 def classifica(df):
     df['H']=[1 if x>y else 0 for x,y in zip(df['Gol Casa'],df['Gol Tras'])]
