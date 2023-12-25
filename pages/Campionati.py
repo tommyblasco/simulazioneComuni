@@ -34,10 +34,13 @@ db_prov_gir = db_prov[db_prov['Group']==sel_girone]
 db_ris_gir = db_ris[db_ris['Gruppo']==sel_girone]
 with tab1:
     st.write('Tutti i comuni del girone:')
-    st.dataframe(db_prov_gir[['Nome','Prov']].sort_values('Nome'))
+    db_prov_gir['url_stemma']=['https://www.araldicacivica.it/wp-content/uploads/2016/04/'+str(x)+'.jpg' for x in db_prov_gir['Nome']]
+    st.data_editor(db_prov_gir[['url_stemma','Nome','Prov']],
+                   column_config={'url_stemma':st.column_config.ImageColumn("Stemma")},hide_index=True)
+    #st.dataframe(db_prov_gir[['Nome','Prov']].sort_values('Nome'),hide_index=True)
 with tab2:
     st.write('Tutte le partite del girone:')
-    st.dataframe(db_ris_gir.drop('Gruppo',axis=1))
+    st.dataframe(db_ris_gir.drop('Gruppo',axis=1),hide_index=True)
 with tab3:
     st.write('La classifica finale del girone:')
-    st.dataframe(classifica(db_ris_gir))
+    st.dataframe(classifica(db_ris_gir),hide_index=True)
