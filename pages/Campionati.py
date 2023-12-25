@@ -17,14 +17,14 @@ def classifica(df):
 
 sel_regione=st.selectbox('Scegli una regione',['Puglia','Toscana'])
 if sel_regione=='Puglia':
-    db_prov=pd.read_csv("https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/Dati/.csv",
+    db_prov=pd.read_csv("https://raw.githubusercontent.com/tommyblasco/simulazioneComuni/main/New%20Puglia.csv",
                            sep=";",decimal=",")
-    db_ris=pd.read_csv("https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/Dati/.csv",
+    db_ris=pd.read_csv("https://raw.githubusercontent.com/tommyblasco/simulazioneComuni/main/Risultati%20Puglia.csv",
                            sep=";",decimal=",")
 else:
-    db_prov=pd.read_csv("https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/Dati/.csv",
+    db_prov=pd.read_csv("https://raw.githubusercontent.com/tommyblasco/simulazioneComuni/main/New%20Toscana.csv",
                            sep=";",decimal=",")
-    db_ris = pd.read_csv("https://raw.githubusercontent.com/tommyblasco/MantraCevapci/main/Dati/.csv",
+    db_ris = pd.read_csv("https://raw.githubusercontent.com/tommyblasco/simulazioneComuni/main/Risultati%20Toscana.csv",
                           sep=";", decimal=",")
 lista_gironi=tuple(sorted(set(db_ris['Gruppo'])))
 sel_girone=st.selectbox('Scegli un girone',lista_gironi)
