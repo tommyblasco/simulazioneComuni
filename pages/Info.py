@@ -19,7 +19,7 @@ st.write("Infine, la simulazione dei risultati per il calendario appena stilato,
          della difesa della squadra 2 (e viceversa). La ponderazione dà peso maggiore alle partite recenti \
          per un fattore che utilizza l'esponenziale negativa:")
 st.latex("W = e^{0.05(x-1)}, where  x=num. giornate")
-l=st.slider("Scegli un valore per lambda:",min_value=0.5, max_value=4, value=1.5, step=0.1)
+l=st.slider("Scegli un valore per lambda:",min_value=0.5, max_value=4.0, value=1.5, step=0.1)
 arr = np.random.poisson(l, 10000)
 fig, ax = plt.subplots()
 ax.hist(arr, bins=14)
