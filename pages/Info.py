@@ -18,6 +18,9 @@ st.write("Infine, la simulazione dei risultati per il calendario appena stilato,
          *Poisson* con parametro lambda pari alla media della media ponderata dell'attacco della squadra 1 e \
          della difesa della squadra 2 (e viceversa). La ponderazione dà peso maggiore alle partite recenti \
          per un fattore che utilizza l'esponenziale negativa:")
-st.latex("W = e^{0.05*(x-1)}, where x=num. giornate")
-st.pyplot(plt.hist(np.random.poisson(1, 10000), 14, density=True))
+st.latex("W = e^{0.05(x-1)}, where  x=num. giornate")
+arr = np.random.poisson(1, 10000)
+fig, ax = plt.subplots()
+ax.hist(arr, bins=14)
+st.pyplot(fig)
 st.caption("Una generazione random Poisson con lambda=1")
