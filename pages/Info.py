@@ -24,3 +24,6 @@ fig, ax = plt.subplots()
 ax.hist(arr, bins=14)
 st.pyplot(fig)
 st.caption("Una generazione random Poisson con lambda=1")
+st.header("Altre ipotesi")
+st.write("La distribuzione Poisson si avvicina all'ipotetica distribuzione dei gol di una squadra all'interno \
+di una partita, giocando opportunamente col parametro lambda. Altre distribuzioni simili possono essere: Weibull o Skellam.")
