@@ -19,11 +19,11 @@ st.write("Infine, la simulazione dei risultati per il calendario appena stilato,
          della difesa della squadra 2 (e viceversa). La ponderazione dà peso maggiore alle partite recenti \
          per un fattore che utilizza l'esponenziale negativa:")
 st.latex("W = e^{0.05(x-1)}, where  x=num. giornate")
-arr = np.random.poisson(1, 10000)
+arr = np.random.poisson(1.3, 10000)
 fig, ax = plt.subplots()
 ax.hist(arr, bins=14)
 st.pyplot(fig)
-st.caption("Una generazione random Poisson con lambda=1")
+st.caption("Una generazione random Poisson con lambda=1.3")
 st.header("Altre ipotesi")
 st.write("La distribuzione Poisson si avvicina all'ipotetica distribuzione dei gol di una squadra all'interno \
 di una partita, giocando opportunamente col parametro lambda. Altre distribuzioni simili possono essere: Weibull o Skellam.")
